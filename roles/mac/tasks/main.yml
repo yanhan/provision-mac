@@ -1,0 +1,9 @@
+---
+- name: Install software using brew
+  homebrew:
+    name: "{{ item }}"
+  with_items:
+    - "ctags-exuberant" # required for haskell-vim-now
+    - "pwgen"
+    - "reattach-to-user-namespace"
+    - "tmux"

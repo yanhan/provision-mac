@@ -1,0 +1,12 @@
+#!/bin/bash
+
+. ~/.bashrc
+
+main() {
+	pyenv activate provision-mac
+	ansible-playbook -i 127.0.0.1, main.yml
+	pyenv deactivate
+}
+
+main "$@"
+# vim:noet
