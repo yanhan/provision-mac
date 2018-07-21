@@ -6,14 +6,14 @@ Install pyenv using homebrew; follow instructions at https://github.com/pyenv/py
 
 Install pyenv-virtualenv using homebrew; follow instructions at https://github.com/pyenv/pyenv-virtualenv#installing-with-homebrew-for-os-x-users
 
-Install python 2.7.13; you can get available versions by running `pyenv install -l`:
+Install python 3.7.0; you can get available versions by running `pyenv install -l`:
 
-    pyenv install 2.7.13
+    pyenv install 3.7.0
 
 cd into this repo and create a new virtualenv for it:
 
     cd ~/provision-mac
-    pyenv virtualenv 2.7.13 provision-mac
+    pyenv virtualenv 3.7.0 provision-mac
 
 Install ansible:
 
