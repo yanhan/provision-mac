@@ -7,3 +7,4 @@
       - "pwgen"
       - "reattach-to-user-namespace"
       - "tmux"
+    update_homebrew: true
