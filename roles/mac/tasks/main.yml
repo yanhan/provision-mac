@@ -8,6 +8,7 @@
       - "pwgen"
       - "reattach-to-user-namespace"
       - "tmux"
+      - "wget"
     update_homebrew: true
 
 - name: Install software using brew cask
