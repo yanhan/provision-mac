@@ -9,6 +9,7 @@
       - "reattach-to-user-namespace"
       - "tmux"
       - "wget"
+      - "zsh"
     update_homebrew: true
 
 - name: Install software using brew cask
