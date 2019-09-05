@@ -8,3 +8,8 @@
       - "reattach-to-user-namespace"
       - "tmux"
     update_homebrew: true
+
+- name: Install software using brew cask
+  homebrew_cask:
+    name:
+      - "iterm2"
