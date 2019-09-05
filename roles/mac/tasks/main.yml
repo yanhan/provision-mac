@@ -12,4 +12,5 @@
 - name: Install software using brew cask
   homebrew_cask:
     name:
+      - "firefox"
       - "iterm2"
