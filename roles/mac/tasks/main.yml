@@ -5,6 +5,7 @@
       - "coreutils"
       - "ctags-exuberant" # required for haskell-vim-now
       - "jq"
+      - "kubectl"
       - "pwgen"
       - "reattach-to-user-namespace"
       - "tmux"
