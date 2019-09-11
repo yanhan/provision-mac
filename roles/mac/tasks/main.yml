@@ -19,3 +19,6 @@
       - "firefox"
       - "iterm2"
       - "sublime-text"
+
+- name: Install dotfiles
+  include: install-dotfiles.yml
