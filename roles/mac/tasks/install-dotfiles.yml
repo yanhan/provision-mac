@@ -1,0 +1,53 @@
+- name: check if oh my zsh is installed
+  shell: test -d .oh-my-zsh
+  args:
+    chdir: "{{ home_path }}"
+  register: oh_my_zsh_installed
+  ignore_errors: true
+
+- name: Install oh my zsh
+  shell: "{{ scripts_path }}/install-oh-my-zsh.sh --unattended"
+  when: oh_my_zsh_installed.rc != 0
+
+- name: check if dotfiles git repository exists
+  shell: test -d dotfiles
+  args:
+    chdir: "{{ home_path }}"
+  ignore_errors: true
+  register: dotfiles_git_repo_exists
+
+- name: clone dotfiles git repository if it does not exist
+  shell: git clone git://github.com/yanhan/dotfiles.git
+  args:
+    chdir: "{{ home_path }}"
+  when: dotfiles_git_repo_exists.rc != 0
+
+- name: dotfiles repo - check git remote origin is in git protocol
+  shell: git remote -v | grep '^origin' | grep 'git@github.com:'
+  args:
+    chdir: "{{ dotfiles_repo_path }}"
+  register: dotfiles_origin_check
+  ignore_errors: true
+  when: dotfiles_git_repo_exists.rc != 0
+
+- name: dotfiles repo - change remote origin
+  shell: git remote rm origin && git remote add origin git@github.com:yanhan/dotfiles.git
+  args:
+    chdir: "{{ dotfiles_repo_path }}"
+  when: dotfiles_git_repo_exists.rc != 0 and dotfiles_origin_check.rc != 0
+
+- name: setup dotfiles repository
+  shell: python setup_home_folder_dotfiles.py gitconfig tmux.conf vimrc zshrc
+  args:
+    chdir: "{{ dotfiles_repo_path }}"
+  when: dotfiles_git_repo_exists.rc == 0
+
+- name: ensure Vundle git repository exists
+  git: repo=https://github.com/gmarik/Vundle.vim.git
+       dest="{{ vundle_repo_path }}"
+       version=v0.10.2
+  register: vundle_git_repo
+
+- name: install Vim plugins
+  shell: yes | vim +PluginInstall +qall
+  when: vundle_git_repo.changed

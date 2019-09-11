@@ -1,0 +1,5 @@
+home_path: /Users/yh
+dotfiles_repo_path: "{{ home_path }}/dotfiles"
+this_repo_path: "{{ home_path }}/code/provision-mac"
+scripts_path: "{{ this_repo_path }}/roles/mac/files/scripts"
+vundle_repo_path: "{{ home_path }}/.vim/bundle/Vundle.vim"
