@@ -6,6 +6,9 @@ main() {
 	pyenv activate provision-mac
 	ansible-playbook -i 127.0.0.1, main.yml
 	pyenv deactivate
+
+	printf "\n\nPlease run the following commands to complete the setup:\n\n"
+	printf "    chsh -s $(which zsh)\n"
 }
 
 main "$@"
