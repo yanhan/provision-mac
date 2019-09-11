@@ -8,7 +8,7 @@ main() {
 	pyenv deactivate
 
 	printf "\n\nPlease run the following commands to complete the setup:\n\n"
-	printf "    chsh -s $(which zsh)\n"
+	printf "    chsh -s /bin/zsh\n"
 }
 
 main "$@"
