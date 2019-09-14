@@ -4,12 +4,15 @@
     name:
       - "coreutils"
       - "ctags-exuberant" # required for haskell-vim-now
+      - "docker-machine-driver-hyperkit"
+      - "hyperkit"
       - "jq"
       - "kubectl"
       - "pwgen"
       - "reattach-to-user-namespace"
       - "tmux"
       - "wget"
+      - "xhyve"
       - "zsh"
     update_homebrew: true
 
@@ -18,7 +21,16 @@
     name:
       - "firefox"
       - "iterm2"
+      - "minikube"
       - "sublime-text"
 
 - name: Install dotfiles
   include: install-dotfiles.yml
+
+- name: Change ownership of docker-machine-driver-hyperkit to root wheel and add suit bit
+  file:
+    path: /usr/local/bin/docker-machine-driver-hyperkit
+    owner: root
+    group: wheel
+    mode: 04755
+  become: yes
