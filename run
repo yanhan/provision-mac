@@ -4,7 +4,7 @@
 
 main() {
 	pyenv activate provision-mac
-	ansible-playbook -i 127.0.0.1, main.yml
+	ansible-playbook -i 127.0.0.1, --ask-become-pass main.yml
 	pyenv deactivate
 
 	printf "\n\nPlease run the following commands to complete the setup:\n\n"
