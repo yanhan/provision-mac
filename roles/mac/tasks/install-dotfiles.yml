@@ -42,12 +42,17 @@
     chdir: "{{ dotfiles_repo_path }}"
   when: dotfiles_git_repo_exists.rc == 0
 
-- name: ensure Vundle git repository exists
-  git: repo=https://github.com/gmarik/Vundle.vim.git
-       dest="{{ vundle_repo_path }}"
-       version=v0.10.2
-  register: vundle_git_repo
+- name: Ensure ${HOME}/.vim/autoload exists
+  file:
+    path: "{{ home_path }}/.vim/autoload"
+    state: directory
 
-- name: install Vim plugins
-  shell: yes | vim +PluginInstall +qall
-  when: vundle_git_repo.changed
+- name: Install vim-plug
+  copy:
+    src: plug.vim
+    dest: "{{ home_path }}/.vim/autoload/plug.vim"
+  register: just_installed_vim_plug
+
+- name: Install Vim plugins
+  shell: vim +PlugInstall +qall
+  when: just_installed_vim_plug.changed
