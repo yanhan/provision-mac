@@ -16,6 +16,7 @@
       - "redis"
       - "ripgrep"
       - "tmux"
+      - "vim"
       - "wget"
       - "xhyve"
       - "zsh"
@@ -24,9 +25,11 @@
 - name: Install software using brew cask
   homebrew_cask:
     name:
+      - "aws-vault"
       - "firefox"
       - "iterm2"
       - "minikube"
+      - "opera"
       - "sublime-text"
 
 - name: Install dotfiles
