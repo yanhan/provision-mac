@@ -1,15 +1,69 @@
 #!/bin/bash
 
-. ~/.bashrc
+if [ -d ~/.pyenv ]; then
+  if [ "${PYENV_ROOT}" = "" ]; then
+    export PYENV_ROOT="${HOME}"/.pyenv
+    export PATH="${PYENV_ROOT}/bin:${PATH}"
+  fi
+  eval "$(pyenv init -)"
+fi
 
-main() {
-	pyenv activate provision-mac
-	ansible-playbook -i 127.0.0.1, --ask-become-pass main.yml
-	pyenv deactivate
+if ! command -v pyenv > /dev/null 2>&1; then
+  git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+  cat >> ~/.bashrc <<- EOF
+export PYENV_ROOT="\${HOME}/.pyenv"
+export PATH="\${PYENV_ROOT}/bin:\${PATH}"
+if command -v pyenv >/dev/null 2>&1; then
+  eval "\$(pyenv init -)"
+fi
+EOF
 
-	printf "\n\nPlease run the following commands to complete the setup:\n\n"
-	printf "    chsh -s /bin/zsh\n"
-}
+  export PYENV_ROOT="${HOME}"/.pyenv
+  export PATH="${PYENV_ROOT}/bin:${PATH}"
+  eval "$(pyenv init -)"
+fi
 
-main "$@"
+pyenv_venv_dir="$(pyenv root)/plugins/pyenv-virtualenv"
+if ! test -d "${pyenv_venv_dir}"; then
+  git clone https://github.com/pyenv/pyenv-virtualenv.git "${pyenv_venv_dir}"
+  # shellcheck disable=SC2016
+  echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+  eval "$(pyenv virtualenv-init -)"
+fi
+
+readonly python_version=3.10.4
+if [ "$(grep -c "${python_version}" <<< "$(pyenv versions)")" -eq 0 ]; then
+  pyenv install "${python_version}"
+fi
+
+eval "$(pyenv init -)"
+
+readonly venv_name=provision-mac
+create_venv=false
+if [ "$(grep -c "${venv_name}" <<< "$(pyenv versions)")" -eq 0 ]; then
+  create_venv=true
+else
+  pyenv activate "${venv_name}"
+  venv_python_version="$(python --version | grep -Eo ' [[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+$' | xargs)"
+  pyenv deactivate
+  if [ "${venv_python_version}" != "${python_version}" ]; then
+    printf "Uninstalling existing virtualenv %s because its python version %s is not the desired %s\n" "${venv_name}" "${venv_python_version}" "${python_version}"
+    pyenv uninstall -f "${venv_name}"
+    create_venv=true
+  fi
+fi
+
+if [ "${create_venv}" = "true" ]; then
+  pyenv virtualenv "${python_version}" "${venv_name}"
+fi
+
+pyenv activate "${venv_name}"
+
+pip install -r requirements.txt
+ansible-playbook -i 127.0.0.1, --ask-become-pass main.yml
+pyenv deactivate
+
+printf "\n\nPlease run the following commands to complete the setup:\n\n"
+printf "    chsh -s /bin/zsh\n"
+
 # vim:noet
