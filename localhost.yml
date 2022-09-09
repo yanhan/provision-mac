@@ -8,5 +8,5 @@
         executable: /bin/bash
       register: get_os
   roles:
-    - role: "mac"
+    - role: mac
       when: get_os.stdout == "Darwin"
