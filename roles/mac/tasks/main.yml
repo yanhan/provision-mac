@@ -2,44 +2,27 @@
 - name: Install software using brew
   homebrew:
     name:
+      - "aws-vault"
       - "coreutils"
-      - "ctags-exuberant" # required for haskell-vim-now
-      - "docker-machine-driver-hyperkit"
       - "gpg"
-      - "hyperkit"
       - "jq"
       - "kubectl"
-      - "mysql"
       - "neovim"
-      - "postgresql"
       - "pwgen"
       - "reattach-to-user-namespace"
-      - "redis"
       - "ripgrep"
       - "tmux"
       - "vim"
       - "wget"
-      - "xhyve"
       - "zsh"
     update_homebrew: true
 
 - name: Install software using brew cask
   homebrew_cask:
     name:
-      - "aws-vault"
       - "firefox"
       - "iterm2"
-      - "minikube"
-      - "opera"
       - "sublime-text"
 
 - name: Install dotfiles
   include: install-dotfiles.yml
-
-- name: Change ownership of docker-machine-driver-hyperkit to root wheel and add suit bit
-  file:
-    path: /usr/local/bin/docker-machine-driver-hyperkit
-    owner: root
-    group: wheel
-    mode: 04755
-  become: yes
