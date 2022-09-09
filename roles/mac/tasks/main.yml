@@ -20,3 +20,6 @@
 
 - name: Install nvm
   include: nvm.yaml
+
+- name: Install global npm packages
+  include: npm-packages.yaml
