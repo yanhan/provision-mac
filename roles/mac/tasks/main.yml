@@ -1,25 +1,25 @@
 ---
 - name: Install packages
-  include: install-packages.yaml
+  include: install-packages.yml
 
 - name: Install zsh-git-prompt
-  include: install-zsh-git-prompt.yaml
+  include: install-zsh-git-prompt.yml
 
 - name: Install dotfiles
   include: install-dotfiles.yml
 
 - name: Install asdf
-  include: install-asdf.yaml
+  include: install-asdf.yml
   tags:
     - asdf
 
 - name: Install ops tools
-  include: install-ops-tools.yaml
+  include: install-ops-tools.yml
   tags:
     - ops
 
 - name: Install nvm
-  include: nvm.yaml
+  include: nvm.yml
 
 - name: Install global npm packages
-  include: npm-packages.yaml
+  include: npm-packages.yml
