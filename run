@@ -74,6 +74,11 @@ pyenv deactivate
 # Set global python version
 pyenv global "${python_version}"
 
+# Install neovim-remote
+if [ 0 -eq "$(pip3 list --user | grep -c neovim-remote)" ]; then
+  pip3 install --user neovim-remote
+fi
+
 printf "\n\nPlease run the following commands to complete the setup:\n\n"
 printf "    chsh -s /bin/zsh\n"
 
