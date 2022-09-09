@@ -1,0 +1,122 @@
+---
+- name: Set fact for asdf managed plugins and tools
+  ansible.builtin.set_fact:
+    asdf_plugins:
+      - name: doctl
+        repo: https://github.com/maristgeek/asdf-doctl.git
+        versions:
+          - 1.78.0
+        global: 1.78.0
+      - name: golang
+        repo: https://github.com/kennyp/asdf-golang.git
+        versions:
+          - 1.17.11
+          - 1.18.3
+        global: 1.18.3
+      - name: gomplate
+        repo: https://github.com/sneakybeaky/asdf-gomplate.git
+        versions:
+          - v3.11.2
+        global: v3.11.2
+      - name: helm
+        repo: https://github.com/Antiarchitect/asdf-helm.git
+        versions:
+          - 3.9.4
+        global: 3.9.4
+      - name: jb
+        repo: https://github.com/beardix/asdf-jb.git
+        versions:
+          - 0.5.1
+        global: 0.5.1
+      - name: kind
+        repo: https://github.com/johnlayton/asdf-kind.git
+        versions:
+          - 0.11.1
+        global: 0.11.1
+      - name: kubectl
+        repo: https://github.com/Banno/asdf-kubectl.git
+        versions:
+          - 1.22.11
+          - 1.23.10
+          - 1.24.2
+        global: 1.23.10
+      - name: minikube
+        repo: https://github.com/alvarobp/asdf-minikube.git
+        versions:
+          - 1.24.0
+          - 1.26.0
+        global: 1.26.0
+      - name: operator-sdk
+        repo: https://github.com/Medium/asdf-operator-sdk.git
+        versions:
+          - 1.16.0
+        global: 1.16.0
+      - name: pre-commit
+        repo: https://github.com/jonathanmorley/asdf-pre-commit.git
+        versions:
+          - 2.19.0
+        global: 2.19.0
+      - name: shellcheck
+        repo: https://github.com/luizm/asdf-shellcheck.git
+        versions:
+          - 0.8.0
+        global: 0.8.0
+      - name: shfmt
+        repo: https://github.com/luizm/asdf-shfmt.git
+        versions:
+          - 3.5.1
+        global: 3.5.1
+      - name: tanka
+        repo: https://github.com/trotttrotttrott/asdf-tanka.git
+        versions:
+          - 0.22.1
+        global: 0.22.1
+  tags:
+    - asdf
+
+- name: Clone asdf repo
+  ansible.builtin.git:
+    repo: https://github.com/asdf-vm/asdf.git
+    dest: "{{ home_path }}/.asdf"
+    accept_newhostkey: yes
+    update: no
+    version: v0.10.2
+  tags:
+    - asdf
+
+- name: Add asdf plugins
+  ansible.builtin.shell: |
+    . "${HOME}"/.asdf/asdf.sh
+    if [[ "$(grep -c  "{{ item.name }}" <<< "$(asdf plugin list)")" -eq 0 ]]; then
+      asdf plugin add "{{ item.name }}" "{{ item.repo }}"
+    fi
+  args:
+    executable: /bin/bash
+  loop: "{{ asdf_plugins | flatten(levels=1) }}"
+  changed_when: False
+  tags:
+    - asdf
+
+- name: Install packages
+  ansible.builtin.shell: |
+    . "${HOME}"/.asdf/asdf.sh
+    if [[ "$(grep -c "{{ item.1 }}" <<< "$(asdf list "{{ item.0.name }}")")" -eq 0 ]]; then
+      asdf install "{{ item.0.name }}" "{{ item.1 }}"
+    fi
+  args:
+    executable: /bin/bash
+  loop: "{{ asdf_plugins | subelements('versions') }}"
+  changed_when: False
+  tags:
+    - asdf
+
+- name: Set global versions of packages
+  ansible.builtin.shell: |
+    . "${HOME}"/.asdf/asdf.sh
+    asdf global "{{ item.name }}" "{{ item.global }}"
+  args:
+    executable: /bin/bash
+  loop: "{{ asdf_plugins | flatten(levels=1) }}"
+  changed_when: False
+  tags:
+    - asdf
