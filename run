@@ -68,7 +68,7 @@ pip install -r requirements.txt
 # directory of the current user.
 # It is useful when we are provisioning a system which does not use our
 # default username
-ansible-playbook -v -K -i inventory -e home_path="${HOME}" "$@" main.yml
+ansible-playbook -v -K -i inventory -e home_path="${HOME}" "$@" localhost.yml
 pyenv deactivate
 
 # Set global python version
