@@ -17,3 +17,6 @@
   include: install-ops-tools.yaml
   tags:
     - ops
+
+- name: Install nvm
+  include: nvm.yaml

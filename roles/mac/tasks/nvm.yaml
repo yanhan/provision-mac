@@ -1,0 +1,26 @@
+---
+- name: Check if nvm is installed
+  ansible.builtin.shell: "NVM_DIR=\"{{ nvm_dir }}\" && source \"${NVM_DIR}\"/nvm.sh && command -v nvm >/dev/null 2>&1"
+  args:
+    executable: /bin/bash
+  register: check_nvm_installed
+  ignore_errors: true
+  changed_when: false
+
+- name: Ensure $HOME/.nvm directory exists
+  ansible.builtin.file:
+    path: "{{ nvm_dir }}"
+    state: directory
+    owner: "{{ ansible_env.USER }}"
+    mode: 0700
+
+- name: Install nvm
+  ansible.builtin.shell: "{{ nvm_install_script_path }}"
+  when: check_nvm_installed.rc != 0
+
+- name: Install nodejs using nvm
+  ansible.builtin.shell: |
+    NVM_DIR="{{ nvm_dir }}" && source "${NVM_DIR}"/nvm.sh && nvm install {{ nodejs_version }}
+  args:
+    executable: /bin/bash
+  changed_when: False

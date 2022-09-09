@@ -1,6 +1,10 @@
 home_path: /Users/yh
 code_dir_path: "{{ home_path }}/code"
+repo_files_path: "{{ code_dir_path }}/provision-mac/roles/mac/files"
 dotfiles_repo_path: "{{ home_path }}/dotfiles"
+nodejs_version: v16.14.2
+nvm_dir: "{{ home_path }}/.nvm"
+nvm_install_script_path: "{{ repo_files_path }}/install-nvm-0.35.0.sh"
 this_repo_path: "{{ home_path }}/code/provision-mac"
 scripts_path: "{{ this_repo_path }}/roles/mac/files/scripts"
 vundle_repo_path: "{{ home_path }}/.vim/bundle/Vundle.vim"
