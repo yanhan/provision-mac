@@ -1,0 +1,35 @@
+---
+- name: Install software using brew
+  homebrew:
+    name:
+      - "autojump"
+      - "aws-vault"
+      - "coreutils"
+      - "exiftool"
+      - "gpg"
+      - "htop"
+      - "ipcalc"
+      - "jq"
+      - "kubectl"
+      - "neovim"
+      - "pwgen"
+      - "pv"
+      - "reattach-to-user-namespace"
+      - "ripgrep"
+      - "tmux"
+      - "vim"
+      - "wget"
+      - "yamllint"
+      - "zsh"
+    update_homebrew: true
+
+- name: Install software using brew cask
+  homebrew_cask:
+    name:
+      - "firefox"
+      - "iterm2"
+      - "postman"
+      - "sublime-text"
+      - "virtualbox"
+      - "virtualbox-extension-pack"
+      - "visual-studio-code"
