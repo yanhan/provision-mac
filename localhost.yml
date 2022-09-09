@@ -1,5 +1,12 @@
 ---
 - hosts: localhost
   connection: local
+  pre_tasks:
+    - name: Get OS
+      shell: uname
+      args:
+        executable: /bin/bash
+      register: get_os
   roles:
-    - "mac"
+    - role: "mac"
+      when: get_os.stdout == "Darwin"
