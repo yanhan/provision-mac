@@ -64,7 +64,11 @@ fi
 pyenv activate "${venv_name}"
 
 pip install -r requirements.txt
-ansible-playbook -i 127.0.0.1, --ask-become-pass main.yml
+# -e home_path=${HOME} sets the value of the home_path variable to the home
+# directory of the current user.
+# It is useful when we are provisioning a system which does not use our
+# default username
+ansible-playbook -v -K -i inventory -e home_path="${HOME}" "$@" main.yml
 pyenv deactivate
 
 printf "\n\nPlease run the following commands to complete the setup:\n\n"
