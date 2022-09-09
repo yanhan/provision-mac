@@ -1,0 +1,8 @@
+---
+- name: setup dotfiles repository
+  ansible.builtin.shell: python setup_home_folder_dotfiles.py coc-settings.json gitconfig init.vim tmux.conf vimrc zshrc
+  args:
+    chdir: "{{ dotfiles_repo_path }}"
+    executable: /bin/bash
+  tags:
+    - dotfiles

@@ -5,6 +5,9 @@
 - name: Install zsh-git-prompt
   include: install-zsh-git-prompt.yaml
 
+- name: Install dotfiles
+  include: install-dotfiles.yml
+
 - name: Install asdf
   include: install-asdf.yaml
   tags:
@@ -14,6 +17,3 @@
   include: install-ops-tools.yaml
   tags:
     - ops
-
-- name: Install dotfiles
-  include: install-dotfiles.yml
