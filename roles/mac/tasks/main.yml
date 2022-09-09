@@ -10,5 +10,10 @@
   tags:
     - asdf
 
+- name: Install ops tools
+  include: install-ops-tools.yaml
+  tags:
+    - ops
+
 - name: Install dotfiles
   include: install-dotfiles.yml
