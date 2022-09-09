@@ -1,7 +1,9 @@
 #!/bin/bash
 
-if ! command -v brew >/dev/null 2>&1; then
-  ./install-homebrew.sh
+if [ "$(uname)" = "Darwin" ]; then
+  if ! command -v brew >/dev/null 2>&1; then
+    ./install-homebrew.sh
+  fi
 fi
 
 if [ -d ~/.pyenv ]; then
