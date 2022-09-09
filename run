@@ -71,6 +71,9 @@ pip install -r requirements.txt
 ansible-playbook -v -K -i inventory -e home_path="${HOME}" "$@" main.yml
 pyenv deactivate
 
+# Set global python version
+pyenv global "${python_version}"
+
 printf "\n\nPlease run the following commands to complete the setup:\n\n"
 printf "    chsh -s /bin/zsh\n"
 
