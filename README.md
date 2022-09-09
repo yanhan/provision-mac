@@ -22,3 +22,12 @@ Install ansible:
 Run:
 
     ./run
+
+
+## Copyright
+
+The following files in this directory are Copyright (c) to the Homebrew contributors under the BSD 2-Clause License:
+
+- install-homebrew.sh
+
+All other files in this directory are Copyright (c) 2019 to Yan Han Pang, under the 3-Clause BSD License.
