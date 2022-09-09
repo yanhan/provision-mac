@@ -1,5 +1,7 @@
 home_path: /Users/yh
+code_dir_path: "{{ home_path }}/code"
 dotfiles_repo_path: "{{ home_path }}/dotfiles"
 this_repo_path: "{{ home_path }}/code/provision-mac"
 scripts_path: "{{ this_repo_path }}/roles/mac/files/scripts"
 vundle_repo_path: "{{ home_path }}/.vim/bundle/Vundle.vim"
+zsh_git_prompt_repo_path: "{{ code_dir_path }}/zsh-git-prompt"
